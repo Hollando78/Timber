@@ -1,6 +1,6 @@
 import spanData from '../data/span-tables.json';
 
-export const getMaxSpan = (timberSize, spacing, grade = 'C16', elementType = 'floor_joists', wallType = null) => {
+export const getMaxSpan = (timberSize, spacing, grade = 'C16', elementType = 'floor_joists', wallType = null, stringerType = null) => {
   try {
     const spacingKey = spacing.replace('mm', '');
     const element = spanData.structural_elements[elementType];
@@ -9,9 +9,13 @@ export const getMaxSpan = (timberSize, spacing, grade = 'C16', elementType = 'fl
       return null;
     }
     
-    // Handle stud walls (heights) vs other elements (spans)
+    // Handle stud walls (heights) vs stair stringers vs other elements (spans)
     if (elementType === 'stud_walls') {
       return getMaxHeight(timberSize, spacing, grade, wallType);
+    }
+    
+    if (elementType === 'stair_stringers') {
+      return getStringerSpan(timberSize, grade, stringerType);
     }
     
     // Regular span lookup for other elements
@@ -115,6 +119,36 @@ export const getStructuralElements = () => {
   }));
 };
 
+export const getStringerSpan = (timberSize, grade = 'C16', stringerType = 'domestic_cut') => {
+  try {
+    const element = spanData.structural_elements.stair_stringers;
+    
+    if (!element || !element.spans[grade] || !element.spans[grade][timberSize] || 
+        !element.spans[grade][timberSize][stringerType]) {
+      return null;
+    }
+    
+    const span = element.spans[grade][timberSize][stringerType];
+    
+    return {
+      maxSpan: span.max_span,
+      notes: span.notes,
+      confidence: span.confidence,
+      status: getSpanStatus(span.max_span),
+      sourceAgreement: span.source_agreement,
+      elementInfo: {
+        description: element.description,
+        loading: element.loading[stringerType],
+        designCriteria: element.design_criteria
+      },
+      stringerType: stringerType
+    };
+  } catch (error) {
+    console.error('Error looking up stringer span:', error);
+    return null;
+  }
+};
+
 export const getWallTypes = () => {
   const studWalls = spanData.structural_elements.stud_walls;
   if (!studWalls || !studWalls.heights || !studWalls.heights.C16) return [];
@@ -124,6 +158,17 @@ export const getWallTypes = () => {
   if (!firstSize) return [];
   
   return Object.keys(studWalls.heights.C16[firstSize]);
+};
+
+export const getStringerTypes = () => {
+  const stringers = spanData.structural_elements.stair_stringers;
+  if (!stringers || !stringers.spans || !stringers.spans.C16) return [];
+  
+  // Get stringer types from the first timber size of C16 grade
+  const firstSize = Object.keys(stringers.spans.C16)[0];
+  if (!firstSize) return [];
+  
+  return Object.keys(stringers.spans.C16[firstSize]);
 };
 
 export const getMetaData = () => {

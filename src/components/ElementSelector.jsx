@@ -11,6 +11,8 @@ const ElementSelector = ({ value, onChange, options }) => {
         return 'Roof Rafters';
       case 'stud_walls':
         return 'Stud Walls';
+      case 'stair_stringers':
+        return 'Stair Stringers';
       default:
         return key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
     }
@@ -26,6 +28,8 @@ const ElementSelector = ({ value, onChange, options }) => {
         return '🏚️';
       case 'stud_walls':
         return '🧱';
+      case 'stair_stringers':
+        return '🪜';
       default:
         return '🪵';
     }
