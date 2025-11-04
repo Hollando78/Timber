@@ -1,9 +1,9 @@
 import spanData from '../data/span-tables.json';
 
-export const getMaxSpan = (timberSize, spacing) => {
+export const getMaxSpan = (timberSize, spacing, grade = 'C16') => {
   try {
     const spacingKey = spacing.replace('mm', '');
-    const span = spanData.floor_joists.C16[timberSize][spacingKey];
+    const span = spanData.floor_joists[grade][timberSize][spacingKey];
     
     if (!span) {
       return null;
@@ -12,7 +12,9 @@ export const getMaxSpan = (timberSize, spacing) => {
     return {
       maxSpan: span.max_span,
       notes: span.notes,
-      status: getSpanStatus(span.max_span)
+      confidence: span.confidence,
+      status: getSpanStatus(span.max_span),
+      sourceAgreement: span.source_agreement
     };
   } catch (error) {
     console.error('Error looking up span:', error);
@@ -28,13 +30,25 @@ const getSpanStatus = (span) => {
 };
 
 export const getTimberSizes = () => {
-  return Object.keys(spanData.floor_joists.C16);
+  return spanData.additional_data.timber_sizes_available;
 };
 
 export const getSpacingOptions = () => {
-  return ['400mm', '450mm', '600mm'];
+  return spanData.additional_data.spacing_options.map(s => s + 'mm');
+};
+
+export const getGrades = () => {
+  return spanData.additional_data.grades_supported;
 };
 
 export const getMetaData = () => {
   return spanData.meta;
+};
+
+export const getDataSources = () => {
+  return spanData.meta.sources;
+};
+
+export const getUsageNotes = () => {
+  return spanData.usage_notes;
 };

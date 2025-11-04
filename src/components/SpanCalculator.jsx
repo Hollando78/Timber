@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import TimberSelector from './TimberSelector';
 import SpacingSelector from './SpacingSelector';
+import GradeSelector from './GradeSelector';
 import ResultsDisplay from './ResultsDisplay';
-import { getMaxSpan, getTimberSizes, getSpacingOptions } from '../utils/spanLookup';
+import { getMaxSpan, getTimberSizes, getSpacingOptions, getGrades } from '../utils/spanLookup';
 
 const SpanCalculator = () => {
   const [timberSize, setTimberSize] = useState('');
   const [spacing, setSpacing] = useState('');
+  const [grade, setGrade] = useState('C16');
   const [result, setResult] = useState(null);
   
   const timberSizes = getTimberSizes();
   const spacingOptions = getSpacingOptions();
+  const grades = getGrades();
 
   useEffect(() => {
-    if (timberSize && spacing) {
-      const spanResult = getMaxSpan(timberSize, spacing);
+    if (timberSize && spacing && grade) {
+      const spanResult = getMaxSpan(timberSize, spacing, grade);
       setResult(spanResult);
     } else {
       setResult(null);
     }
-  }, [timberSize, spacing]);
+  }, [timberSize, spacing, grade]);
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -27,10 +30,15 @@ const SpanCalculator = () => {
         <div className="mb-4 p-3 bg-blue-50 rounded-lg">
           <p className="text-sm text-blue-800">
             <span className="font-semibold">Use:</span> Floor Joists | 
-            <span className="font-semibold"> Grade:</span> C16 | 
-            <span className="font-semibold"> Loading:</span> Standard Domestic
+            <span className="font-semibold"> Loading:</span> Standard Domestic (1.75 kN/m²)
           </p>
         </div>
+        
+        <GradeSelector
+          value={grade}
+          onChange={setGrade}
+          options={grades}
+        />
         
         <TimberSelector
           value={timberSize}
@@ -44,7 +52,7 @@ const SpanCalculator = () => {
           options={spacingOptions}
         />
         
-        <ResultsDisplay result={result} />
+        <ResultsDisplay result={result} grade={grade} />
       </div>
     </div>
   );
