@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "source": "Building Regulations Approved Document A",
+    "grade": "C16",
+    "loading": {
+      "dead_load": 0.25,
+      "imposed_load": 1.5,
+      "unit": "kN/m²"
+    },
+    "deflection_limit": "span/333",
+    "last_updated": "2025-11-04",
+    "disclaimer": "Values for guidance only. Consult a structural engineer for definitive calculations."
+  },
+  "floor_joists": {
+    "C16": {
+      "47x100": {
+        "400": {"max_span": 2.15, "notes": "Standard domestic loading"},
+        "450": {"max_span": 2.06, "notes": "Standard domestic loading"},
+        "600": {"max_span": 1.82, "notes": "Standard domestic loading"}
+      },
+      "47x150": {
+        "400": {"max_span": 3.28, "notes": "Standard domestic loading"},
+        "450": {"max_span": 3.14, "notes": "Standard domestic loading"},
+        "600": {"max_span": 2.78, "notes": "Standard domestic loading"}
+      },
+      "47x200": {
+        "400": {"max_span": 4.38, "notes": "Standard domestic loading"},
+        "450": {"max_span": 4.19, "notes": "Standard domestic loading"},
+        "600": {"max_span": 3.71, "notes": "Standard domestic loading"}
+      },
+      "47x225": {
+        "400": {"max_span": 4.93, "notes": "Standard domestic loading"},
+        "450": {"max_span": 4.72, "notes": "Standard domestic loading"},
+        "600": {"max_span": 4.18, "notes": "Standard domestic loading"}
+      }
+    }
+  }
+}
