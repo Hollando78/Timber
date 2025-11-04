@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "page": 1,
+      "method": "camelot_stream",
+      "shape": [
+        35,
+        2
+      ],
+      "has_timber_sizes": false,
+      "has_spacings": false,
+      "has_spans": false,
+      "span_count": 0
+    },
+    {
+      "page": 2,
+      "method": "camelot_stream",
+      "shape": [
+        25,
+        3
+      ],
+      "has_timber_sizes": false,
+      "has_spacings": false,
+      "has_spans": true,
+      "span_count": 2
+    }
+  ],
+  "floor_joists": {
+    "C16": {},
+    "C24": {}
+  }
+}

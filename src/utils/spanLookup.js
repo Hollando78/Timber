@@ -1,20 +1,27 @@
 import spanData from '../data/span-tables.json';
 
-export const getMaxSpan = (timberSize, spacing, grade = 'C16') => {
+export const getMaxSpan = (timberSize, spacing, grade = 'C16', elementType = 'floor_joists') => {
   try {
     const spacingKey = spacing.replace('mm', '');
-    const span = spanData.floor_joists[grade][timberSize][spacingKey];
+    const element = spanData.structural_elements[elementType];
     
-    if (!span) {
+    if (!element || !element.spans[grade] || !element.spans[grade][timberSize] || !element.spans[grade][timberSize][spacingKey]) {
       return null;
     }
+    
+    const span = element.spans[grade][timberSize][spacingKey];
     
     return {
       maxSpan: span.max_span,
       notes: span.notes,
       confidence: span.confidence,
       status: getSpanStatus(span.max_span),
-      sourceAgreement: span.source_agreement
+      sourceAgreement: span.source_agreement,
+      elementInfo: {
+        description: element.description,
+        loading: element.loading,
+        designCriteria: element.design_criteria
+      }
     };
   } catch (error) {
     console.error('Error looking up span:', error);
@@ -29,16 +36,31 @@ const getSpanStatus = (span) => {
   return 'limited';
 };
 
-export const getTimberSizes = () => {
-  return spanData.additional_data.timber_sizes_available;
+export const getTimberSizes = (elementType = 'floor_joists') => {
+  const element = spanData.structural_elements[elementType];
+  if (!element || !element.spans) return [];
+  
+  // Get all timber sizes available for any grade in this element type
+  const sizes = new Set();
+  Object.values(element.spans).forEach(gradeData => {
+    Object.keys(gradeData).forEach(size => sizes.add(size));
+  });
+  return Array.from(sizes).sort();
 };
 
-export const getSpacingOptions = () => {
-  return spanData.additional_data.spacing_options.map(s => s + 'mm');
+export const getSpacingOptions = (elementType = 'floor_joists') => {
+  return spanData.timber_specifications.spacing_options.map(s => s + 'mm');
 };
 
 export const getGrades = () => {
-  return spanData.additional_data.grades_supported;
+  return spanData.timber_specifications.grades_available;
+};
+
+export const getStructuralElements = () => {
+  return Object.keys(spanData.structural_elements).map(key => ({
+    key,
+    ...spanData.structural_elements[key]
+  }));
 };
 
 export const getMetaData = () => {

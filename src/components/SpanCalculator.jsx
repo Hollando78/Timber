@@ -2,37 +2,44 @@ import React, { useState, useEffect } from 'react';
 import TimberSelector from './TimberSelector';
 import SpacingSelector from './SpacingSelector';
 import GradeSelector from './GradeSelector';
+import ElementSelector from './ElementSelector';
 import ResultsDisplay from './ResultsDisplay';
-import { getMaxSpan, getTimberSizes, getSpacingOptions, getGrades } from '../utils/spanLookup';
+import { getMaxSpan, getTimberSizes, getSpacingOptions, getGrades, getStructuralElements } from '../utils/spanLookup';
 
 const SpanCalculator = () => {
+  const [elementType, setElementType] = useState('floor_joists');
   const [timberSize, setTimberSize] = useState('');
   const [spacing, setSpacing] = useState('');
   const [grade, setGrade] = useState('C16');
   const [result, setResult] = useState(null);
   
-  const timberSizes = getTimberSizes();
-  const spacingOptions = getSpacingOptions();
+  const structuralElements = getStructuralElements();
+  const timberSizes = getTimberSizes(elementType);
+  const spacingOptions = getSpacingOptions(elementType);
   const grades = getGrades();
 
+  // Reset timber size when element type changes as sizes may differ
   useEffect(() => {
-    if (timberSize && spacing && grade) {
-      const spanResult = getMaxSpan(timberSize, spacing, grade);
+    setTimberSize('');
+  }, [elementType]);
+
+  useEffect(() => {
+    if (timberSize && spacing && grade && elementType) {
+      const spanResult = getMaxSpan(timberSize, spacing, grade, elementType);
       setResult(spanResult);
     } else {
       setResult(null);
     }
-  }, [timberSize, spacing, grade]);
+  }, [timberSize, spacing, grade, elementType]);
 
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="mb-4 p-3 bg-blue-50 rounded-lg">
-          <p className="text-sm text-blue-800">
-            <span className="font-semibold">Use:</span> Floor Joists | 
-            <span className="font-semibold"> Loading:</span> Standard Domestic (1.75 kN/m²)
-          </p>
-        </div>
+        <ElementSelector
+          value={elementType}
+          onChange={setElementType}
+          options={structuralElements}
+        />
         
         <GradeSelector
           value={grade}
