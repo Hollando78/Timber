@@ -9,6 +9,8 @@ const ElementSelector = ({ value, onChange, options }) => {
         return 'Ceiling Joists';
       case 'roof_rafters':
         return 'Roof Rafters';
+      case 'stud_walls':
+        return 'Stud Walls';
       default:
         return key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
     }
@@ -22,6 +24,8 @@ const ElementSelector = ({ value, onChange, options }) => {
         return '🏘️';
       case 'roof_rafters':
         return '🏚️';
+      case 'stud_walls':
+        return '🧱';
       default:
         return '🪵';
     }

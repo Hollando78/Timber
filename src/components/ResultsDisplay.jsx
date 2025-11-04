@@ -1,11 +1,15 @@
 import React from 'react';
 
-const ResultsDisplay = ({ result, grade }) => {
+const ResultsDisplay = ({ result, grade, elementType }) => {
+  const isStudWall = elementType === 'stud_walls';
+  const measurement = isStudWall ? 'height' : 'span';
+  const value = isStudWall ? result?.maxHeight : result?.maxSpan;
+  
   if (!result) {
     return (
       <div className="mt-6 p-6 bg-gray-50 rounded-lg border border-gray-200">
         <p className="text-center text-gray-500">
-          Select timber grade, size and spacing to calculate maximum span
+          Select timber grade, size and spacing to calculate maximum {measurement}
         </p>
       </div>
     );
@@ -27,17 +31,32 @@ const ResultsDisplay = ({ result, grade }) => {
   };
 
   const getStatusText = (status) => {
-    switch (status) {
-      case 'excellent':
-        return 'Excellent span capability';
-      case 'good':
-        return 'Good span capability';
-      case 'adequate':
-        return 'Adequate span capability';
-      case 'limited':
-        return 'Limited span - consider larger timber';
-      default:
-        return '';
+    if (isStudWall) {
+      switch (status) {
+        case 'excellent':
+          return 'Excellent height capability';
+        case 'good':
+          return 'Good height capability';
+        case 'adequate':
+          return 'Adequate height capability';
+        case 'limited':
+          return 'Limited height - consider larger timber';
+        default:
+          return '';
+      }
+    } else {
+      switch (status) {
+        case 'excellent':
+          return 'Excellent span capability';
+        case 'good':
+          return 'Good span capability';
+        case 'adequate':
+          return 'Adequate span capability';
+        case 'limited':
+          return 'Limited span - consider larger timber';
+        default:
+          return '';
+      }
     }
   };
 
@@ -60,16 +79,21 @@ const ResultsDisplay = ({ result, grade }) => {
     <div className={`mt-6 p-6 rounded-lg border-2 ${getStatusColor(result.status)}`}>
       <div className="text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
-          <p className="text-sm font-medium uppercase tracking-wide">Maximum Span</p>
+          <p className="text-sm font-medium uppercase tracking-wide">
+            Maximum {isStudWall ? 'Height' : 'Span'}
+          </p>
           <span className={`text-sm ${confidenceInfo.color}`} title={confidenceInfo.text}>
             {confidenceInfo.icon}
           </span>
         </div>
-        <p className="text-4xl font-bold mb-2">{result.maxSpan.toFixed(2)}m</p>
+        <p className="text-4xl font-bold mb-2">{value?.toFixed(2)}m</p>
         <p className="text-sm font-medium">{getStatusText(result.status)}</p>
         
         <div className="text-xs mt-2 space-y-1 opacity-75">
           <p>Grade: {grade} • Confidence: {result.confidence}</p>
+          {isStudWall && result.wallType && (
+            <p>Wall Type: {result.wallType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
+          )}
           {result.notes && <p>{result.notes}</p>}
         </div>
       </div>
