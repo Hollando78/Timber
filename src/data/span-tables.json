@@ -50,7 +50,7 @@
         "dead_load": 0.25,
         "imposed_load": 1.5,
         "total_load": 1.75,
-        "unit": "kN/m\u00b2",
+        "unit": "kN/m²",
         "notes": "Standard domestic floor loading per Building Regs"
       },
       "design_criteria": {
@@ -710,7 +710,7 @@
         "dead_load": 0.25,
         "imposed_load": 0.25,
         "total_load": 0.5,
-        "unit": "kN/m\u00b2",
+        "unit": "kN/m²",
         "notes": "Ceiling weight plus light storage access"
       },
       "design_criteria": {
@@ -969,7 +969,7 @@
         "imposed_load": 0.6,
         "snow_load": 0.6,
         "total_load": 1.35,
-        "unit": "kN/m\u00b2",
+        "unit": "kN/m²",
         "notes": "Roof covering + structure + snow load (not exceeding 100m altitude)"
       },
       "design_criteria": {
@@ -1057,6 +1057,32 @@
               ],
               "notes": "C16 grade large rafter for longer spans"
             }
+          },
+          "47x100": {
+            "400": {
+              "max_span": 2.1,
+              "confidence": "medium",
+              "source_agreement": [
+                "calculated_roof_loading"
+              ],
+              "notes": "Small rafter for short spans - sheds, dormers"
+            },
+            "450": {
+              "max_span": 1.95,
+              "confidence": "medium",
+              "source_agreement": [
+                "calculated_roof_loading"
+              ],
+              "notes": "Small rafter for short spans - sheds, dormers"
+            },
+            "600": {
+              "max_span": 1.73,
+              "confidence": "medium",
+              "source_agreement": [
+                "calculated_roof_loading"
+              ],
+              "notes": "Small rafter for short spans - sheds, dormers"
+            }
           }
         },
         "C24": {
@@ -1136,6 +1162,32 @@
                 "calculated_roof_loading"
               ],
               "notes": "C24 grade large rafter for longer spans"
+            }
+          },
+          "47x100": {
+            "400": {
+              "max_span": 2.29,
+              "confidence": "medium",
+              "source_agreement": [
+                "calculated_from_c16"
+              ],
+              "notes": "C24 grade small rafter for short spans"
+            },
+            "450": {
+              "max_span": 2.13,
+              "confidence": "medium",
+              "source_agreement": [
+                "calculated_from_c16"
+              ],
+              "notes": "C24 grade small rafter for short spans"
+            },
+            "600": {
+              "max_span": 1.89,
+              "confidence": "medium",
+              "source_agreement": [
+                "calculated_from_c16"
+              ],
+              "notes": "C24 grade small rafter for short spans"
             }
           }
         },
@@ -1217,6 +1269,32 @@
               ],
               "notes": "C30 grade large rafter for longer spans"
             }
+          },
+          "47x100": {
+            "400": {
+              "max_span": 2.43,
+              "confidence": "medium",
+              "source_agreement": [
+                "calculated_from_c24"
+              ],
+              "notes": "C30 premium grade small rafter"
+            },
+            "450": {
+              "max_span": 2.26,
+              "confidence": "medium",
+              "source_agreement": [
+                "calculated_from_c24"
+              ],
+              "notes": "C30 premium grade small rafter"
+            },
+            "600": {
+              "max_span": 2.01,
+              "confidence": "medium",
+              "source_agreement": [
+                "calculated_from_c24"
+              ],
+              "notes": "C30 premium grade small rafter"
+            }
           }
         }
       }
@@ -1228,14 +1306,14 @@
           "dead_load": 0.5,
           "imposed_load": 0.0,
           "total_load": 0.5,
-          "unit": "kN/m\u00b2",
+          "unit": "kN/m²",
           "notes": "Self-weight of partition wall and finishes"
         },
         "load_bearing_wall": {
           "dead_load": 1.0,
           "imposed_load": 2.5,
           "total_load": 3.5,
-          "unit": "kN/m\u00b2",
+          "unit": "kN/m²",
           "notes": "Wall weight plus typical floor loading from above"
         },
         "external_wall": {
@@ -1243,7 +1321,7 @@
           "imposed_load": 2.5,
           "wind_load": 0.8,
           "total_load": 4.5,
-          "unit": "kN/m\u00b2",
+          "unit": "kN/m²",
           "notes": "External wall with insulation plus structural loads and wind"
         }
       },
@@ -1636,7 +1714,7 @@
           "imposed_load": 4.8,
           "concentrated_load": 1.3,
           "total_load": 5.3,
-          "unit": "kN/m\u00b2",
+          "unit": "kN/m²",
           "notes": "Domestic stairs with cut stringers - reduced effective section"
         },
         "domestic_uncut": {
@@ -1644,7 +1722,7 @@
           "imposed_load": 4.8,
           "concentrated_load": 1.3,
           "total_load": 5.3,
-          "unit": "kN/m\u00b2",
+          "unit": "kN/m²",
           "notes": "Domestic stairs with uncut stringers - full section"
         },
         "commercial_cut": {
@@ -1652,7 +1730,7 @@
           "imposed_load": 7.5,
           "concentrated_load": 2.0,
           "total_load": 8.3,
-          "unit": "kN/m\u00b2",
+          "unit": "kN/m²",
           "notes": "Commercial stairs with cut stringers - higher loading"
         },
         "commercial_uncut": {
@@ -1660,7 +1738,7 @@
           "imposed_load": 7.5,
           "concentrated_load": 2.0,
           "total_load": 8.3,
-          "unit": "kN/m\u00b2",
+          "unit": "kN/m²",
           "notes": "Commercial stairs with uncut stringers - higher loading"
         }
       },
@@ -1669,7 +1747,7 @@
         "end_conditions": "simply_supported",
         "bearing_length": "minimum 50mm",
         "service_class": "1 (dry conditions)",
-        "slope": "maximum 42\u00b0 pitch per Part K"
+        "slope": "maximum 42° pitch per Part K"
       },
       "spans": {
         "C16": {
@@ -2072,7 +2150,7 @@
     "Cut stringers have reduced effective section depth after notching for treads",
     "Uncut stringers maintain full section - suitable for closed riser construction",
     "Part K Building Regulations compliance required for all stair construction",
-    "Maximum 42\u00b0 pitch and other dimensional requirements per Part K",
+    "Maximum 42° pitch and other dimensional requirements per Part K",
     "Professional structural calculation required for non-standard stair loading",
     "Commercial loading significantly higher than domestic requirements"
   ]
